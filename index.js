@@ -17,6 +17,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.get("/ping", (req, res) => res.json({ status: "OK" }));
+app.get("/api/ping", (req, res) => res.json({ status: "OK" }));
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, console.log(`Listening on port ${PORT}`));
