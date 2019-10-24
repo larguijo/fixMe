@@ -7,6 +7,16 @@ module.exports = (app) => {
     res.json(models.sequelize.models[modelName].rawAttributes);
   });
 
+  app.get('/api/:modelName/:id', async (req, res) => {
+    try {
+      const { modelName, id } = req.params;
+      const record = await models[modelName].findByPk(id);
+      res.json(record);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  });
+
   app.get('/api/:modelName', async (req, res) => {
     try {
       const { modelName } = req.params;

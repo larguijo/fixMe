@@ -3,6 +3,7 @@ module.exports = (db, dt) => {
     {
       name: {
         type: dt.STRING,
+        comment: 'Nombre',
         allowNull: false,
         validate: {
           len: [3, 100],
@@ -11,6 +12,7 @@ module.exports = (db, dt) => {
       },
       description: {
         type: dt.STRING,
+        comment: 'Descripción',
         allowNull: false,
         validate: {
           len: [3, 500],
@@ -18,6 +20,7 @@ module.exports = (db, dt) => {
       },
       status: {
         type: dt.STRING,
+        comment: 'Estado',
         allowNull: false,
         defaultValue: 'ACTIVE',
         validate: {
