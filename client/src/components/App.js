@@ -20,8 +20,8 @@ function App() {
       <div className="container">
         <Route exact path="/" component={Welcome} />
         <Route exact path="/project/new" render={(props) => <Create {...props} entity={"project"} />} />
-        <Route path="/project/:id" component={ProjectDashboard} />
-        <Route exact path="/project/:projectId/:entity/:new" component={Create} />
+        <Route exact path="/project/:id" component={ProjectDashboard} />
+        <Route exact path="/project/:projectId/:entity/new" component={Create} />
       </div>
     </BrowserRouter >
 

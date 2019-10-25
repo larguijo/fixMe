@@ -1,14 +1,16 @@
 import axios from 'axios';
 import types from './types';
 
-export const fetchEntity = (entity) =>
+export const fetchEntity = (entity, conditions = {}) =>
   async dispatch => {
-    const res = await axios.get(`/api/${entity}`);
-    dispatch({ type: types[entity][`FETCH_${entity.toUpperCase()}_ALL`], payload: res.data });
+    console.log('fetchEntity', entity, conditions);
+    const res = await axios.get(`/api/${entity}`, { params: conditions });
+    if (types[entity].LOADING) dispatch({ type: types[entity].LOADING, payload: true });
+    dispatch({ type: types[entity].FETCH_ALL, payload: res.data });
   }
 
 export const createEntity = (entity) =>
   async dispatch => {
     const res = await axios.get(`/api/${entity}`);
-    dispatch({ type: types[entity][`CREATE_${entity.toUpperCase()}`], payload: res.data });
+    dispatch({ type: types[entity].CREATE, payload: res.data });
   }

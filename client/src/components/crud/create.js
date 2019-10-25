@@ -12,7 +12,9 @@ const Create = ({ match: { params: urlParams }, history, entity: passedEntity })
   const [entity] = useState(passedEntity || urlParams.entity);
   const [projectId] = useState(urlParams.projectId);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
   const dispatch = useDispatch();
+  const nextPath = urlParams.projectId ? `/project/${projectId}` : '/';
 
   const getEntity = async () => {
     setIsLoading(true);
@@ -23,12 +25,15 @@ const Create = ({ match: { params: urlParams }, history, entity: passedEntity })
 
   const onSubmit = async (values) => {
     try {
-      console.log('values', values);
+      setErrorMessage(null);
+      setIsLoading(true);
       await axios.post(`/api/${entity}`, values);
+      setIsLoading(false);
+      history.push(nextPath);
     } catch (error) {
-      console.log(error);
+      setErrorMessage(error.response.data);
+      setIsLoading(false);
     }
-
   }
 
   const validate = (validate) => {
@@ -44,9 +49,6 @@ const Create = ({ match: { params: urlParams }, history, entity: passedEntity })
   return (
     <React.Fragment>
       <h3 className="header">{`Crear ${entity}`}</h3>
-      {isLoading && (<div class="progress">
-        <div class="indeterminate"></div>
-      </div>)}
       <Formik key="2" className="row" onSubmit={onSubmit} validate={validate} initialValues={{ projectId }} >
         <Form className="col s12">
           {renderFields(entity, entityFields)}
@@ -56,11 +58,14 @@ const Create = ({ match: { params: urlParams }, history, entity: passedEntity })
           </button>
           <button
             className="yellow darken-3 white-text btn-flat"
-            onClick={() => history.push('/')}
+            onClick={() => history.push(nextPath)}
           >Back</button>
+          {errorMessage && errorMessage.errors && <div>{errorMessage.errors[0].message}</div>}
         </Form>
       </Formik >
-
+      {isLoading && (<div class="progress">
+        <div class="indeterminate"></div>
+      </div>)}
     </React.Fragment>
   )
 }

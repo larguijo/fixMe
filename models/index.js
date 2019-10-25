@@ -32,8 +32,11 @@ fs
 
 // Relationships
 db.category.project = db.category.belongsTo(db.project, { foreignKey: { allowNull: false } });
+db.ticket.project = db.ticket.belongsTo(db.project, { foreignKey: { allowNull: false } });
+db.ticket.category = db.ticket.belongsTo(db.category, { foreignKey: { allowNull: false } });
 
 // sequel.sync({ force: true });
+// sequel.sync();
 
 console.log('DB', db);
 db.sequelize = sequel;

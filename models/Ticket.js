@@ -1,5 +1,5 @@
 module.exports = (db, dt) => {
-  const Category = db.define('category', {
+  const Ticket = db.define('ticket', {
     name: {
       type: dt.STRING(100),
       comment: 'Nombre',
@@ -10,20 +10,20 @@ module.exports = (db, dt) => {
       }
     },
     description: {
-      type: dt.STRING(500),
+      type: dt.STRING(4000),
       comment: 'Descripción',
       allowNull: false,
       validate: {
-        len: [3, 500],
+        len: [3, 4000],
       }
     },
     status: {
       type: dt.STRING(20),
       comment: 'Estado',
       allowNull: false,
-      defaultValue: 'ACTIVE',
+      defaultValue: 'OPEN',
       validate: {
-        isIn: [['ACTIVE', 'CLOSED']]
+        isIn: [['OPEN', 'WORKING', 'SENT TO REVIEW', 'CLOSED']]
       }
     }
   }, {
@@ -32,5 +32,5 @@ module.exports = (db, dt) => {
     }
   );
 
-  return Category;
+  return Ticket;
 }

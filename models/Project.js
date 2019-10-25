@@ -28,7 +28,8 @@ module.exports = (db, dt) => {
         }
       }
     }, {
-      underscored: true
+      underscored: true,
+      freezeTableName: true
     }
   )
   return Project;
