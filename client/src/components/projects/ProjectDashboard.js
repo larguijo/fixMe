@@ -12,7 +12,7 @@ const ProjectDashboard = ({ match: { params: { id: projectId } } }) => {
   const tickets = useSelector(getTickets);
   const isLoading = useSelector(getIsLoading);
   const fetchProject = (id) => dispatch(ProjectActions.fetchProject(id));
-  const fetchTickets = (id) => dispatch(fetchEntity('ticket', { projectId: id }));
+  const fetchTickets = (id) => dispatch(ProjectActions.fetchTicketsForCards(id));
 
   useEffect(() => {
     fetchProject(projectId);

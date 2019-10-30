@@ -15,19 +15,19 @@ const TicketList = () => {
   return (
     <div className="row grey lighten-4">
       <div className={columnClass}>
-        <h5>Pendiente</h5>
+        <h5 className="center">Pendiente</h5>
         {renderTickets(openTickets)}
       </div>
       <div className={columnClass}>
-        <h5>En curso</h5>
+        <h5 className="center">En curso</h5>
         {renderTickets(workingTickets)}
       </div>
       <div className={columnClass}>
-        <h5>En revisión</h5>
+        <h5 className="center">En revisión</h5>
         {renderTickets(reviewTickets)}
       </div>
       <div className={columnClass}>
-        <h5>Cerrados</h5  >
+        <h5 className="center">Cerrados</h5  >
         {renderTickets(closedTickets)}
       </div>
     </div>);

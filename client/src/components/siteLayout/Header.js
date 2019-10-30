@@ -27,13 +27,13 @@ const Header = () => {
       </ul>
       <nav>
         <div className="nav-wrapper deep-purple darken-4">
-          <a href="#" className="brand-logo">
+          <a href="" className="brand-logo">
             <i className="large material-icons">build</i> FIX ME
         </a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
               <a className="dropdown-trigger" tabIndex="0"
-                href="#!"
+                href={`${selectedProject ? `/project/${selectedProject}` : '/'}`}
                 data-target="projectList">Projects
                 <i class="material-icons right">arrow_drop_down</i>
               </a>

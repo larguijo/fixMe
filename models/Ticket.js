@@ -1,3 +1,4 @@
+const statuses = require('../utils/constants').project.STATUS;
 module.exports = (db, dt) => {
   const Ticket = db.define('ticket', {
     name: {
@@ -21,9 +22,9 @@ module.exports = (db, dt) => {
       type: dt.STRING(20),
       comment: 'Estado',
       allowNull: false,
-      defaultValue: 'OPEN',
+      defaultValue: statuses[0],
       validate: {
-        isIn: [['OPEN', 'WORKING', 'SENT TO REVIEW', 'CLOSED']]
+        isIn: [statuses]
       }
     }
   }, {
