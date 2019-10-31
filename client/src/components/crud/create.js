@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
-import { renderFields } from '../../helpers/renderFields';
+import { RenderFields } from '../../helpers/renderFields';
 import M from 'materialize-css';
 import { withRouter } from 'react-router-dom';
 import { createEntity } from '../../actions/genericCrud';
@@ -25,6 +25,7 @@ const Create = ({ match: { params: urlParams }, history, entity: passedEntity })
 
   const onSubmit = async (values) => {
     try {
+      console.log('values', values);
       setErrorMessage(null);
       setIsLoading(true);
       await axios.post(`/api/${entity}`, values);
@@ -49,19 +50,29 @@ const Create = ({ match: { params: urlParams }, history, entity: passedEntity })
   return (
     <React.Fragment>
       <h3 className="header">{`Crear ${entity}`}</h3>
-      <Formik key="2" className="row" onSubmit={onSubmit} validate={validate} initialValues={{ projectId }} >
-        <Form className="col s12">
-          {renderFields(entity, entityFields)}
-          <button className="btn waves-effect waves-light right" type="submit" name="action">
-            Submit
+      <Formik
+        key="2"
+        className="row"
+        onSubmit={onSubmit}
+        validate={validate}
+        initialValues={{ projectId }}
+        render={
+          ({ setFieldValue }) => (
+            <Form className="col s12">
+              <RenderFields entity={entity} fields={entityFields} setFieldValue={setFieldValue} />
+              <button className="btn waves-effect waves-light right" type="submit" name="action">
+                Submit
           <i className="material-icons right">send</i>
-          </button>
-          <button
-            className="yellow darken-3 white-text btn-flat"
-            onClick={() => history.push(nextPath)}
-          >Back</button>
-          {errorMessage && errorMessage.errors && <div>{errorMessage.errors[0].message}</div>}
-        </Form>
+              </button>
+              <button
+                className="yellow darken-3 white-text btn-flat"
+                onClick={() => history.push(nextPath)}
+              >Back</button>
+              {errorMessage && errorMessage.errors && <div>{errorMessage.errors[0].message}</div>}
+            </Form>
+          )
+        }
+      >
       </Formik >
       {isLoading && (<div class="progress">
         <div class="indeterminate"></div>
