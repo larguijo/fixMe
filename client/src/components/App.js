@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import ProjectList from './projects/ProjectList';
 import ProjectDashboard from './projects/ProjectDashboard';
 import Header from './siteLayout/Header';
 import Create from './crud/create';
+import View from './crud/view';
 import M from "materialize-css";
 
 const Welcome = () => <div>Welcome</div>;
@@ -21,7 +21,9 @@ function App() {
         <Route exact path="/" component={Welcome} />
         <Route exact path="/project/new" render={(props) => <Create {...props} entity={"project"} />} />
         <Route exact path="/project/:id" component={ProjectDashboard} />
+        <Route exact path="/project/:projectId/:entity/view" component={View} />
         <Route exact path="/project/:projectId/:entity/new" component={Create} />
+        <Route exact path="/project/:projectId/:entity/edit/:id" render={(props) => <Create {...props} mode="edit" />} />
       </div>
     </BrowserRouter >
 

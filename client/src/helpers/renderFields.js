@@ -14,12 +14,12 @@ const renderText = ({ id, label, type, validate, setFieldValue }) => {
     <div className="input-field col s12">
       <Field type={type} name={id} style={options} {...options} />
       <label htmlFor={id}>{label}</label>
-      <ErrorMessage className="invalid" name={id} component="div" />
+      <ErrorMessage className="red-text" name={id} component="div" />
     </div>
   </div>
 }
 
-const renderSelect = ({ id, label, type, options, defaultValue }) => {
+const renderSelect = ({ id, label, type, options, defaultValue, setFieldValue }) => {
   return (
     <div key={id} className="row">
       <div className="input-field col s12">
@@ -28,6 +28,7 @@ const renderSelect = ({ id, label, type, options, defaultValue }) => {
           {!defaultValue && (<option disabled value="">Choose your option</option>)}
         </Field>
         <label className="active" htmlFor={id}>{label}</label>
+        <ErrorMessage className="red-text" name={id} component="div" />
       </div >
     </div>
   );
@@ -53,6 +54,7 @@ export const RenderFields = ({ entity, fields, setFieldValue }) => {
           id: fieldName,
           label: comment || fieldName,
           defaultValue,
+          setFieldValue,
           options: pointsTo ?
             refData.map(({ name, id }) => ({ label: name, value: id })) :
             validate.isIn[0].map(o => ({ label: o, value: o }))

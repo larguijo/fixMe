@@ -3,6 +3,7 @@ module.exports = (app, models) => {
 
   app.get('/api/:modelName/define', async (req, res) => {
     const { modelName } = req.params;
+    const { projectId } = req.query;
     const { rawAttributes: attributes } = models.sequelize.models[modelName];
     let references = {};
     // Find references.
@@ -15,8 +16,10 @@ module.exports = (app, models) => {
       }, []);
 
     try {
+      const conditions = {};
+      if (projectId) conditions.projectId = projectId;
       await Promise.all(refs.map(async e => {
-        const values = await models[e.conf.references.model].findAll();
+        const values = await models[e.conf.references.model].findAll({ where: conditions });
         references[e.model] = values;
         return values;
       }));
@@ -54,6 +57,17 @@ module.exports = (app, models) => {
     try {
       const { modelName } = req.params;
       const record = await models[modelName].create(req.body);
+      res.json(record);
+    } catch (error) {
+      console.log('Error', error);
+      res.status(500).send(error);
+    }
+  });
+
+  app.put('/api/:modelName/:id', async (req, res) => {
+    const { modelName, id } = req.params;
+    try {
+      const record = await models[modelName].update(req.body, { where: { id } });
       res.json(record);
     } catch (error) {
       console.log('Error', error);

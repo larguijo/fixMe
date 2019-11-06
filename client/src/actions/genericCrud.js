@@ -3,7 +3,6 @@ import types from './types';
 
 export const fetchEntity = (entity, conditions = {}) =>
   async dispatch => {
-    console.log('fetchEntity', entity, conditions);
     const res = await axios.get(`/api/${entity}`, { params: conditions });
     if (types[entity].LOADING) dispatch({ type: types[entity].LOADING, payload: true });
     dispatch({ type: types[entity].FETCH_ALL, payload: res.data });
